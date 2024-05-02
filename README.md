@@ -1,3 +1,6 @@
-# networkSlicing
+# Network Slicing
 
-https://www.youtube.com/watch?v=FcZd305VI60
+
+## Networking 2 - Softwarized and Virtualized Mobile Networks course project, prof. Fabrizio Granelli
+
+### Università degli studi di Trento 
