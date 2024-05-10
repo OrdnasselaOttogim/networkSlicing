@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slice Activation</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .image {
+            margin-top: 20px;
+            width: 50%;
+            max-width: 400px;
+            height: auto;
+        }
+        .button {
+            width: 100%;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="/static/topology.png" alt="Topology" class="image">
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>Slice</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Production</td>
+                    <td>
+                        {% if slice_states[0] %}
+                            <span class="badge badge-pill">Active</span>
+                        {% else %}
+                            <span class="badge badge-pill">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if slice_states[0] %}
+                            <form action="/activate/0" method="post">
+                                <button type="submit" name="action" value="deactivate" class="btn btn-danger button">Deactivate</button>
+                            </form>
+                        {% else %}
+                            <form action="/activate/0" method="post">
+                                <button type="submit" name="action" value="activate" class="btn btn-success button">Activate</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Management</td>
+                    <td>
+                        {% if slice_states[1] %}
+                            <span class="badge badge-pill">Active</span>
+                        {% else %}
+                            <span class="badge badge-pill">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if slice_states[1] %}
+                            <form action="/activate/1" method="post">
+                                <button type="submit" name="action" value="deactivate" class="btn btn-danger button">Deactivate</button>
+                            </form>
+                        {% else %}
+                            <form action="/activate/1" method="post">
+                                <button type="submit" name="action" value="activate" class="btn btn-success button">Activate</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Development</td>
+                    <td>
+                        {% if slice_states[2] %}
+                            <span class="badge badge-pill">Active</span>
+                        {% else %}
+                            <span class="badge badge-pill">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if slice_states[2] %}
+                            <form action="/activate/2" method="post">
+                                <button type="submit" name="action" value="deactivate" class="btn btn-danger button">Deactivate</button>
+                            </form>
+                        {% else %}
+                            <form action="/activate/2" method="post">
+                                <button type="submit" name="action" value="activate" class="btn btn-success button">Activate</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
