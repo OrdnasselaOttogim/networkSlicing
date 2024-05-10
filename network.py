@@ -41,7 +41,7 @@ class CustomTopology(Topo):
         self.addLink(switches[2], switches[3], **link_config)
         self.addLink(switches[2], switches[4], **link_config)
         self.addLink(switches[3], switches[4], **link_config)
-        
+
 if __name__ == "__main__":
 
 
@@ -59,6 +59,6 @@ if __name__ == "__main__":
     net.addController(controller)
     net.build()
     net.start()
-    subprocess.call("./production_slice.sh")
+    subprocess.call("./scripts/create_virtual_queues_drop_connections.sh")
     CLI(net)
     net.stop()
