@@ -19,18 +19,25 @@ The primary objective of this project is to facilitate the dynamic management of
 
 <div align=center><img src="./static/topology.png" alt="topology" style="width:600px;"/></div>
 
+Initially, there is no connection between any hosts. Below is the image with the `pingall` command ran, showing that there is no connection visible.
+
+<div align=center><img src="./images/pingall.png" alt="pingall" style="width:600px;"/></div>
+
+
 - **Slices Description**: The network is divided into three distinct slices:
   1. **Production Slice**: Includes hosts h2, h3, h4, and h8. These hosts are part of the production environment and have bandwidth allocation of 500Mbps.
      
-<div align=center><img src="./static/production_slice.png" alt="topology" style="width:600px;"/></div>
+<div align=center><img src="./images/production_slice.png" alt="production_slice" style="width:600px;"/></div>
 
   2. **Management Slice**: Consists of hosts h5 and h7. This slice is dedicated to management tasks and employs different routing paths and bandwidth allocation for UDP and TCP traffic. 300Mbps for TCP traffic and 400Mbps for UDP traffic.
 
-<div align=center><img src="./static/management_slice.png" alt="topology" style="width:600px;"/></div>
+<div align=center><img src="./images/management_slice.png" alt="management_slice" style="width:600px;"/></div>
 
   3. **Development Slice**: Comprises hosts h1 and h6, designated for development purposes.
 
-<div align=center><img src="./static/development_slice.png" alt="topology" style="width:600px;"/></div>
+<div align=center><img src="./images/development_slice.png" alt="development_slice" style="width:600px;"/></div>
+
+
 
 ## Getting Started
 
