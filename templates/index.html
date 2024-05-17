@@ -112,6 +112,7 @@
                 <thead>
                     <tr>
                         <th>Slice</th>
+                        <th>Bandwidth</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -119,6 +120,7 @@
                 <tbody>
                     <tr>
                         <td>Production</td>
+                        <td>500Mbps</td>
                         <td>
                             {% if slice_states[0] %}
                                 <span class="badge production">Active</span>
@@ -140,6 +142,7 @@
                     </tr>
                     <tr>
                         <td>Management</td>
+                        <td>300Mbps<br>(UDP: 400Mbps)</td>
                         <td>
                             {% if slice_states[1] %}
                                 <span class="badge management">Active</span>
@@ -161,6 +164,7 @@
                     </tr>
                     <tr>
                         <td>Development</td>
+                        <td>200Mbps</td>
                         <td>
                             {% if slice_states[2] %}
                                 <span class="badge development">Active</span>
@@ -198,12 +202,10 @@
                 }
             };
 
-            // Update the links based on sliceStates
             const productionActive = sliceStates[0];
             const managementActive = sliceStates[1];
             const developmentActive = sliceStates[2];
 
-            // Example: Update links for Production slice
             updateLinkStatus('link1', productionActive);
             updateLinkStatus('link2', developmentActive);
             updateLinkStatus('link3', managementActive);
@@ -211,6 +213,7 @@
             updateLinkStatus('link5', productionActive);
             updateLinkStatus('link6', managementActive);
             updateLinkStatus('link7', managementActive);
+
             const productionHosts = ['h2', 'h3', 'h4', 'h8'];
             productionHosts.forEach(host => {
                 const element = document.getElementById(host);
@@ -223,7 +226,6 @@
                 }
             });
 
-            // Update nodes for Management slice
             const managementHosts = ['h5', 'h7'];
             managementHosts.forEach(host => {
                 const element = document.getElementById(host);
@@ -236,7 +238,6 @@
                 }
             });
 
-            // Update nodes for Development slice
             const developmentHosts = ['h1', 'h6'];
             developmentHosts.forEach(host => {
                 const element = document.getElementById(host);

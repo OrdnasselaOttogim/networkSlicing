@@ -46,7 +46,7 @@ class Slicing(app_manager.RyuApp):
         }
 
         #if in slice 2 and udp
-        self.slice2_switch_to_port = {
+        self.slice2_udp_switch_to_port = {
             3:{"00:00:00:00:00:07":3, "00:00:00:00:00:05":1},
             4:{"00:00:00:00:00:07":1, "00:00:00:00:00:05":3},
             2:{"00:00:00:00:00:07":5, "00:00:00:00:00:05":4}
@@ -122,7 +122,7 @@ class Slicing(app_manager.RyuApp):
                         print("src " + str(src))
                         print("dst " + str(dst))
                         print("dpid " + str(dpid))
-                        out_port = self.slice2_switch_to_port[dpid][dst]
+                        out_port = self.slice2_udp_switch_to_port[dpid][dst]
                         match = datapath.ofproto_parser.OFPMatch(
                             in_port=in_port,
                             eth_dst=dst,
@@ -161,8 +161,8 @@ class Slicing(app_manager.RyuApp):
                 else:
                     print("---------- inside tcp else-----")
                     out_port = self.mac_to_port[dpid][dst]
-                    actions = [datapath.ofproto_parser.OFPActionOutput(out_port)]
                     match = datapath.ofproto_parser.OFPMatch(eth_dst=dst)
+                    actions = [datapath.ofproto_parser.OFPActionOutput(out_port)]
                     # add to flow table
                     self.add_flow(datapath, 1, match, actions)
 
