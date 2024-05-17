@@ -81,7 +81,32 @@
             stroke: rgba(255, 140, 0, 0.5);
             stroke-width: 10px;
         }
-
+        .legend {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .legend-line {
+            width: 60px;
+            height: 10px;
+            margin-right: 5px;
+        }
+        .legend-tcp {
+            background-color: rgba(60, 179, 113, 0.5);
+        }
+        .legend-udp {
+            background: linear-gradient(to right, rgba(60, 179, 113, 0.5) 50%, transparent 50%);
+            background-size: 13px 10px;
+        }
     </style>
 </head>
 <body>
@@ -107,11 +132,23 @@
 
             </svg>
         </div>
+        <div id="legend" class="legend inactive">
+            <div class="legend-item">
+                <div class="legend-line legend-tcp"></div>
+                <span>TCP Route</span>
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-line legend-udp"></div>
+                <span>UDP Route</span>
+            </div>
+        </div>
         <div class="table-container">
             <table class="table mt-4">
                 <thead>
                     <tr>
                         <th>Slice</th>
+                        <th>Hosts</th>
                         <th>Bandwidth</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -120,6 +157,7 @@
                 <tbody>
                     <tr>
                         <td>Production</td>
+                        <td>h2 h3 h4 h8</td>
                         <td>500Mbps</td>
                         <td>
                             {% if slice_states[0] %}
@@ -142,6 +180,7 @@
                     </tr>
                     <tr>
                         <td>Management</td>
+                        <td>h5 h7</td>
                         <td>300Mbps<br>(UDP: 400Mbps)</td>
                         <td>
                             {% if slice_states[1] %}
@@ -164,6 +203,7 @@
                     </tr>
                     <tr>
                         <td>Development</td>
+                        <td>h1 h6</td>
                         <td>200Mbps</td>
                         <td>
                             {% if slice_states[2] %}
@@ -213,6 +253,7 @@
             updateLinkStatus('link5', productionActive);
             updateLinkStatus('link6', managementActive);
             updateLinkStatus('link7', managementActive);
+            updateLinkStatus('legend', managementActive);
 
             const productionHosts = ['h2', 'h3', 'h4', 'h8'];
             productionHosts.forEach(host => {
