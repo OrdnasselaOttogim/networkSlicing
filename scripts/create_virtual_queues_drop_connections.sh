@@ -38,7 +38,7 @@ sudo ovs-vsctl set port s2-eth4 qos=@newqos -- \
 other-config:max-rate=1000000000 \
 queues:4=@mgmtq \
 queues:3=@devq -- \
---id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=400000000 -- \
+--id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=300000000 -- \
 --id=@devq create queue other-config:min-rate=10000 other-config:max-rate=200000000
 
 sudo ovs-vsctl set port s2-eth5 qos=@newqos -- \
@@ -47,7 +47,7 @@ other-config:max-rate=1000000000 \
 queues:1=@prodq \
 queues:4=@mgmtq -- \
 --id=@prodq create queue other-config:min-rate=10000 other-config:max-rate=500000000 -- \
---id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=400000000
+--id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=300000000
 
 
 #creating virtual queues for s3
@@ -56,14 +56,14 @@ sudo ovs-vsctl set port s3-eth3 qos=@newqos -- \
 other-config:max-rate=1000000000 \
 queues:4=@mgmtq \
 queues:3=@devq -- \
---id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=400000000 -- \
+--id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=300000000 -- \
 --id=@devq create queue other-config:min-rate=10000 other-config:max-rate=200000000
 
 sudo ovs-vsctl set port s3-eth4 qos=@newqos -- \
 --id=@newqos create QoS type=linux-htb \
 other-config:max-rate=1000000000 \
 queues:2=@mgmtq -- \
---id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=300000000
+--id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=400000000
 
 #creating virtual queues for s4
 sudo ovs-vsctl set port s4-eth3 qos=@newqos -- \
@@ -72,14 +72,14 @@ other-config:max-rate=1000000000 \
 queues:1=@prodq \
 queues:4=@mgmtq -- \
 --id=@prodq create queue other-config:min-rate=10000 other-config:max-rate=500000000 -- \
---id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=400000000
+--id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=300000000
 
 
 sudo ovs-vsctl set port s4-eth4 qos=@newqos -- \
 --id=@newqos create QoS type=linux-htb \
 other-config:max-rate=1000000000 \
 queues:2=@mgmtq -- \
---id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=300000000
+--id=@mgmtq create queue other-config:min-rate=10000 other-config:max-rate=400000000
 
 
 echo '----------- Dropping all connections ------------'

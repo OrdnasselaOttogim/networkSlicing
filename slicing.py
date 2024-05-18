@@ -45,8 +45,8 @@ class Slicing(app_manager.RyuApp):
             "00:00:00:00:00:05","00:00:00:00:00:07"
         }
 
-        #if in slice 2 and udp
-        self.slice2_udp_switch_to_port = {
+        #if in slice 2 and tcp
+        self.slice2_tcp_switch_to_port = {
             3:{"00:00:00:00:00:07":3, "00:00:00:00:00:05":1},
             4:{"00:00:00:00:00:07":1, "00:00:00:00:00:05":3},
             2:{"00:00:00:00:00:07":5, "00:00:00:00:00:05":4}
@@ -122,7 +122,7 @@ class Slicing(app_manager.RyuApp):
                         print("src " + str(src))
                         print("dst " + str(dst))
                         print("dpid " + str(dpid))
-                        out_port = self.slice2_udp_switch_to_port[dpid][dst]
+                        out_port = self.mac_to_port[dpid][dst]
                         match = datapath.ofproto_parser.OFPMatch(
                             in_port=in_port,
                             eth_dst=dst,
@@ -130,16 +130,16 @@ class Slicing(app_manager.RyuApp):
                             ip_proto=0x11,  # udp
                             udp_dst=pkt.get_protocol(udp.udp).dst_port,
                         )
-                        actions = [datapath.ofproto_parser.OFPActionSetQueue(4),datapath.ofproto_parser.OFPActionOutput(out_port)]
+                        actions = [datapath.ofproto_parser.OFPActionSetQueue(2),datapath.ofproto_parser.OFPActionOutput(out_port)]
 
                         # add to flow table
                         self.add_flow(datapath, 65530, match, actions)
 
                         #then execute the same command that was added to the flow table
                         self._send_package(msg, datapath, in_port, actions)
-                    else:
+                    elif pkt.get_protocol(tcp.tcp):
                         print("---------- slice 2 tcp else-----")
-                        out_port = self.mac_to_port[dpid][dst]
+                        out_port = self.slice2_tcp_switch_to_port[dpid][dst]
                         print("src " + str(src))
                         print("dst " + str(dst))
                         print("dpid " + str(dpid))
@@ -150,7 +150,7 @@ class Slicing(app_manager.RyuApp):
                             eth_type=ether_types.ETH_TYPE_IP,
                             ip_proto=0x06,  # tcp
                         )
-                        actions = [datapath.ofproto_parser.OFPActionSetQueue(2),datapath.ofproto_parser.OFPActionOutput(out_port)]
+                        actions = [datapath.ofproto_parser.OFPActionSetQueue(4),datapath.ofproto_parser.OFPActionOutput(out_port)]
 
                         # add to flow table
                         self.add_flow(datapath, 65520, match, actions)
