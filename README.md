@@ -47,24 +47,32 @@ The network is divided into three distinct slices:
 ## Getting Started
 
 To get started with the project, follow these steps:
+
 1. Run the ComNetsEmu VM. For detailed instructions, refer to [ComNetsEmu Setup Instructions](https://www.granelli-lab.org/researches/relevant-projects/comnetsemu-labs). 
 2. Clone this repository to your ComNetsEmu virtual machine
 3. Open a terminal and navigate to the cloned repository directory
-4. Run the Ryu manager along with the interface:
+4. Ensure that Flask is installed. You can install Flask using pip install if it is not already installed:
+
+    ```
+    pip install flask
+    ```
+
+5. Run the Ryu manager along with the interface:
 
     ```
     ryu-manager slicing.py
     ```
-5. Open another terminal window and navigate to the same directory
-6. Start Mininet with the provided network configuration:
+
+6. Open another terminal window and navigate to the same directory
+7. Start Mininet with the provided network configuration:
 
     ```
     sudo python3 network.py
     ```
     This command will set up the network according to the specified topology and slices.
 
-7. You can now use the interface to activate or deactivate network slices as needed.
-8. Additionally, you can perform tests using the Mininet terminal to verify the behavior of the network under different conditions.
+8. You can now use the interface to activate or deactivate network slices as needed.
+9. Additionally, you can perform tests using the Mininet terminal to verify the behavior of the network under different conditions.
 
 
 ## Test Results
@@ -103,9 +111,15 @@ The image below shows the `pingall` command results for the Development Slice.
 
 <div align=center><img src="./images/pingall_development_slice.png" alt="pingall_development_slice" style="width:600px;"/></div>
 
-Below is an image showing the results of the TCP bandwidth test using the iperf command between h1 and h6.
+Below is an image showing the results of the TCP bandwidth test using the `iperf` command between h1 and h6.
 
 <div align=center><img src="./images/iperf_development_slice.png" alt="iperf_development_slice" style="width:600px;"/></div>
 
+## Contributors
+
+| Name                 | Email                                  |
+|----------------------|----------------------------------------|
+| Alessandro Migotto   | alessandro.migotto@studenti.unitn.it   |
+| Elif Ruveyha Ozmen   | elifruveyha.ozmen@studenti.unitn.it    |
 
 ### Università degli studi di Trento 
