@@ -4,6 +4,18 @@ echo '------------ Creating virtual queues ------------'
 
 
 #creating a virtual queue for s1
+sudo ovs-vsctl set port s1-eth1 qos=@newqos -- \
+--id=@newqos create QoS type=linux-htb \
+other-config:max-rate=1000000000 \
+queues:1=@prodq -- \
+--id=@prodq create queue other-config:min-rate=10000 other-config:max-rate=500000000
+
+sudo ovs-vsctl set port s1-eth2 qos=@newqos -- \
+--id=@newqos create QoS type=linux-htb \
+other-config:max-rate=1000000000 \
+queues:1=@prodq -- \
+--id=@prodq create queue other-config:min-rate=10000 other-config:max-rate=500000000
+
 sudo ovs-vsctl set port s1-eth3 qos=@newqos -- \
 --id=@newqos create QoS type=linux-htb \
 other-config:max-rate=1000000000 \
