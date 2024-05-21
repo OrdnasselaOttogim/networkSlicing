@@ -30,7 +30,7 @@ Initially, there is no connection between any hosts. Below is the image with the
 The network is divided into three distinct slices:
 
   ### 1. Production Slice
-  Includes hosts h2, h3, h4, and h8. These hosts are part of the production environment and have bandwidth allocation of 500Mbps.
+  Includes hosts h1, h2, h3, h4, and h8. These hosts are part of the production environment and have bandwidth allocation of 500Mbps.
      
 <div align=center><img src="./images/production_slice.png" alt="production_slice" style="width:600px;"/></div>
 
@@ -83,9 +83,11 @@ The image below shows the `pingall` command results for the Production Slice, in
 
 <div align=center><img src="./images/pingall_production_slice.png" alt="pingall_production_slice" style="width:600px;"/></div>
 
-The image below shows the TCP bandwidth test results for the Production Slice between h2, h3, h4, and h8 using `iperf` command.
+The image below shows the TCP bandwidth test results for the Production Slice between h1, h2, h3, h4, and h8 using `iperf` command.
 
 <div align=center><img src="./images/iperf_production_slice.png" alt="iperf_production_slice" style="width:600px;"/></div>
+
+<div align=center><img src="./images/iperf_production_slice2.png" alt="iperf_production_slice2" style="width:600px;"/></div>
 
 ### Management Slice
 
