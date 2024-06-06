@@ -1,18 +1,12 @@
 # On Demand SDN Slices in ComNetsEmu
 
 ### Networking 2 - Softwarized and Virtualized Mobile Networks course project, prof. Fabrizio Granelli
-
 ### Università degli studi di Trento 
-
-## Contributors
-
-| Name                 | Email                                  |
-|----------------------|----------------------------------------|
-| Alessandro Migotto   | alessandro.migotto@studenti.unitn.it   |
-| Elif Ruveyha Ozmen   | elifruveyha.ozmen@studenti.unitn.it    |
 
 
 This project focuses on implementing a network slicing approach within ComNetsEmu, allowing for the dynamic activation and deactivation of network slices.
+
+The PDF file of the project presentation is available in the repository.
 
 ## Table of Contents
 - [Goal](#goal)
@@ -127,3 +121,9 @@ Below is an image showing the results of the TCP bandwidth test using the `iperf
 
 <div align=center><img src="./images/iperf_development_slice.png" alt="iperf_development_slice" style="width:600px;"/></div>
 
+## Contributors
+
+| Name                 | Email                                  |
+|----------------------|----------------------------------------|
+| Alessandro Migotto   | alessandro.migotto@studenti.unitn.it   |
+| Elif Ruveyha Ozmen   | elifruveyha.ozmen@studenti.unitn.it    |
