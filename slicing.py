@@ -32,12 +32,13 @@ class Slicing(app_manager.RyuApp):
         self.mac_to_port = {
                 1:{"00:00:00:00:00:01": 1, "00:00:00:00:00:02": 2, "00:00:00:00:00:03": 3,
                    "00:00:00:00:00:04": 3, "00:00:00:00:00:06": 3, "00:00:00:00:00:08": 3},
-                2:{"00:00:00:00:00:03": 1, "00:00:00:00:00:04": 2, "00:00:00:00:00:02": 3, "00:00:00:00:00:01": 3,
-                   "00:00:00:00:00:08": 5},
+                2:{"00:00:00:00:00:03": 1, "00:00:00:00:00:04": 2, "00:00:00:00:00:02": 3,
+                   "00:00:00:00:00:01": 3, "00:00:00:00:00:08": 5},
         	3:{"00:00:00:00:00:05": 1, "00:00:00:00:00:06": 2, "00:00:00:00:00:01": 3,
         	   "00:00:00:00:00:07": 4},
-        	4:{"00:00:00:00:00:07": 1, "00:00:00:00:00:08": 2, "00:00:00:00:00:02": 3,"00:00:00:00:00:01": 3,
-                   "00:00:00:00:00:03": 3, "00:00:00:00:00:04": 3, "00:00:00:00:00:05": 4}
+        	4:{"00:00:00:00:00:07": 1, "00:00:00:00:00:08": 2, "00:00:00:00:00:02": 3,
+                   "00:00:00:00:00:01": 3, "00:00:00:00:00:03": 3, "00:00:00:00:00:04": 3,
+                   "00:00:00:00:00:05": 4}
         }
 
 
@@ -45,8 +46,8 @@ class Slicing(app_manager.RyuApp):
             "00:00:00:00:00:05","00:00:00:00:00:07"
         }
 
-        #if in slice 2 and tcp
-        self.slice2_tcp_switch_to_port = {
+        #if in slice 2 and tcp or icmp
+        self.slice2_tcp_icmp_switch_to_port = {
             3:{"00:00:00:00:00:07":3, "00:00:00:00:00:05":1},
             4:{"00:00:00:00:00:07":1, "00:00:00:00:00:05":3},
             2:{"00:00:00:00:00:07":5, "00:00:00:00:00:05":4}
@@ -118,10 +119,6 @@ class Slicing(app_manager.RyuApp):
             if dst in self.mac_to_port[dpid]:
                 if dst in self.slice2_hosts:
                     if pkt.get_protocol(udp.udp):
-                        print("---------- slice 2 udp if ------")
-                        print("src " + str(src))
-                        print("dst " + str(dst))
-                        print("dpid " + str(dpid))
                         out_port = self.mac_to_port[dpid][dst]
                         match = datapath.ofproto_parser.OFPMatch(
                             in_port=in_port,
@@ -138,11 +135,7 @@ class Slicing(app_manager.RyuApp):
                         #then execute the same command that was added to the flow table
                         self._send_package(msg, datapath, in_port, actions)
                     elif pkt.get_protocol(tcp.tcp):
-                        print("---------- slice 2 tcp else-----")
-                        out_port = self.slice2_tcp_switch_to_port[dpid][dst]
-                        print("src " + str(src))
-                        print("dst " + str(dst))
-                        print("dpid " + str(dpid))
+                        out_port = self.slice2_tcp_icmp_switch_to_port[dpid][dst]
                         match = datapath.ofproto_parser.OFPMatch(
                             in_port=in_port,
                             eth_dst=dst,
@@ -157,9 +150,22 @@ class Slicing(app_manager.RyuApp):
 
                         #then execute the same command that was added to the flow table
                         self._send_package(msg, datapath, in_port, actions)
+                    elif pkt.get_protocol(icmp.icmp):
+                        out_port = self.slice2_tcp_icmp_switch_to_port[dpid][dst]
+                        match = datapath.ofproto_parser.OFPMatch(
+                            in_port=in_port,
+                            eth_dst=dst,
+                            eth_src=src,
+                            eth_type=ether_types.ETH_TYPE_IP,
+                            ip_proto=0x01,  # icmp
+                        )
+                        actions = [datapath.ofproto_parser.OFPActionSetQueue(2),datapath.ofproto_parser.OFPActionOutput(out_port)]
+                        # add to flow table
+                        self.add_flow(datapath, 65520, match, actions)
 
+                        #then execute the same command that was added to the flow table
+                        self._send_package(msg, datapath, in_port, actions)
                 else:
-                    print("---------- inside tcp else-----")
                     out_port = self.mac_to_port[dpid][dst]
                     match = datapath.ofproto_parser.OFPMatch(eth_dst=dst)
                     actions = [datapath.ofproto_parser.OFPActionOutput(out_port)]
@@ -168,15 +174,6 @@ class Slicing(app_manager.RyuApp):
 
                     #then execute the same command that was added to the flow table
                     self._send_package(msg, datapath, in_port, actions)
-
-
-
-                print("-----------------------")
-                print("switchid " + str(dpid))
-                print("src " + str(src))
-                print("dst " + str(dst))
-                print("out_port " + str(out_port))
-                print("in_port " + str(in_port))
 
 
     def interface(self):
