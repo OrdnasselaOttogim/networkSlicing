@@ -12,6 +12,7 @@ The PDF file of the project presentation is available in the repository.
 - [Goal](#goal)
 - [Implementation Overview](#implementation-overview)
 - [Getting Started](#getting-started)
+- [How To Test](#how-to-test)
 - [Test Results](#test-results)
 - [Contributors](#contributors)
 
@@ -78,6 +79,77 @@ To get started with the project, follow these steps:
 8. You can now use the interface to activate or deactivate network slices as needed.
 9. Additionally, you can perform tests using the Mininet terminal to verify the behavior of the network under different conditions.
 
+## How To Test
+
+### Checking Connectivity
+
+To check the connectivity between all hosts, you can use the `pingall` command:
+
+    ```sh
+    pingall
+    ```
+
+Alternatively, to check the connectivity between two specific hosts (e.g., host 1 and host 2) by sending 3 packets, use the following command in Mininet terminal:
+
+    ```
+    h1 ping -c3 h2
+    ```
+
+### Testing TCP Bandwidth
+
+To test the TCP bandwidth between host 1 and host 2, you can use the iperf command:
+
+    ```
+    iperf h1 h2
+    ```
+
+### Testing UDP Bandwidth
+
+To test the UDP bandwidth, follow these steps:
+
+1. Use the dump command in Mininet to get the PID of the hosts.
+
+2. Choose two hosts for the UDP bandwidth test. Connect to the terminal of each host using the following command in different new terminals:
+   
+    ```
+    sudo mnexec -a <PID> bash
+    ```
+3. On one of the hosts, run the following command to start the iperf server in UDP mode:
+    ```
+    iperf -s -u -p 5555 -i 1 > result_udp.txt
+    ```
+* -u specifies the UDP test instead of TCP.
+* -s runs iperf in server mode, which will wait for a client to connect and start the test.
+* -p 5555 sets the port to listen on, which is 5555 in this case.
+* -i 1 reports statistics every 1 second.
+* > result_udp.txt redirects the output to a file  
+
+4. On the terminal of the other host, run the following command to start the iperf client and connect to the server:
+    ```
+    iperf -c 10.0.0.1 -u -b 800Mb -p 5555 -t 10
+    ```   
+* -c specifies the client mode and sets the IP address of the iperf server to connect to (in this case, it is host 1).
+* -u specifies the UDP protocol.
+* -b 800Mb sets the bandwidth for the test, which can be more than the expected result to ensure accuracy.
+* -p 5555 specifies the port number to connect on the server, which should be the same as the server's port.
+* -t 10 specifies the duration of the test in seconds; you can adjust this according to your needs.
+
+<div align=center><img src="./images/udp_testing.png" alt="udp_testing" style="width:1000px;"/></div>
+
+
+### Viewing Flows in Switches
+
+To see the flows added to the switches, use the following command on a separate terminal:
+
+    ```
+    sudo ovs-ofctl dump-flows <name_of_the_switch>
+    ```  
+### Cleaning Up Mininet
+
+After stopping the network or whenever you encounter an issue in Mininet, use the following command to clean up the Mininet environment (configurations, any running network, hosts, links, etc.):
+    ```
+    sudo mn -c
+    ```
 
 ## Test Results
 
