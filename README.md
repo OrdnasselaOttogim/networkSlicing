@@ -143,7 +143,7 @@ iperf -s -u -p 5555 -i 1 > result_udp.txt
 ```
     iperf -c <ip_address_of_the_server_host> -u -b 800Mb -p 5555 -t 10
 ```   
-* -c specifies the client mode and sets the IP address of the iperf server to connect to (in this case, it is host 1).
+* -c specifies the client mode and sets the IP address of the iperf server to connect to (Recall that in this project, the IP address of each host is in the format 10.0.0.x, where x is a number from 1 to 8, representing the host IDs.).
 * -u specifies the UDP protocol.
 * -b 800Mb sets the bandwidth for the test, which can be more than the expected result to ensure accuracy.
 * -p 5555 specifies the port number to connect on the server, which should be the same as the server's port.
