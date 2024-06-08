@@ -67,7 +67,10 @@ To get started with the project, follow these steps:
     ```
     ryu-manager slicing.py
     ```
+  You can access the interface using the URL displayed at the end of the output, as highlighted in the image below:
 
+<div align=center><img src="./images/url_shown.png" alt="url_shown" style="width:600px;"/></div>
+  
 6. Open another terminal window and navigate to the same directory
 7. Start Mininet with the provided network configuration:
 
@@ -83,21 +86,31 @@ To get started with the project, follow these steps:
 
 ### Checking Connectivity
 
-To check the connectivity between all hosts, you can use the `pingall` command:
+To check the connectivity between all hosts, you can use the `pingall` command in Mininet terminal:
 
 ```
 pingall
 ```
 
-Alternatively, to check the connectivity between two specific hosts (e.g., host 1 and host 2) by sending 3 packets, use the following command in Mininet terminal:
+Alternatively, to check the connectivity between two specific hosts (e.g., host 1 and host 2), use the following command in Mininet terminal:
 
 ```
 h1 ping -c3 h2
 ```
+* -c specifies the number of packets to be sent.
+
+
+### Cleaning Up Mininet
+
+After stopping the network or whenever you encounter an issue in Mininet, use the following command to clean up the Mininet environment (configurations, any running network, hosts, links, etc.):
+
+```
+sudo mn -c
+```
 
 ### Testing TCP Bandwidth
 
-To test the TCP bandwidth between host 1 and host 2, you can use the iperf command:
+To test the TCP bandwidth between host 1 and host 2, you can use the iperf command in Mininet terminal:
 
 ```
 iperf h1 h2
@@ -146,14 +159,6 @@ To see the flows added to the switches, use the following command on a separate 
 
 ```
 sudo ovs-ofctl dump-flows <name_of_the_switch>
-```
-
-### Cleaning Up Mininet
-
-After stopping the network or whenever you encounter an issue in Mininet, use the following command to clean up the Mininet environment (configurations, any running network, hosts, links, etc.):
-
-```
-sudo mn -c
 ```
 
 ## Test Results
