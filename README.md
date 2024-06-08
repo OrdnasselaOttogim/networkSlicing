@@ -141,7 +141,7 @@ iperf -s -u -p 5555 -i 1 > result_udp.txt
 4. On the terminal of the other host, run the following command to start the iperf client and connect to the server:
    
 ```
-    iperf -c 10.0.0.1 -u -b 800Mb -p 5555 -t 10
+    iperf -c <ip_address_of_the_server_host> -u -b 800Mb -p 5555 -t 10
 ```   
 * -c specifies the client mode and sets the IP address of the iperf server to connect to (in this case, it is host 1).
 * -u specifies the UDP protocol.
